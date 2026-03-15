@@ -36,7 +36,7 @@ export default function ThemeToggle() {
     <button
       type="button"
       onClick={handleToggle}
-      className="fixed top-3 right-3 z-[100] inline-flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-bg-secondary text-text-secondary shadow-card transition-colors hover:text-text-primary"
+      className="fixed bottom-3 right-3 z-[100] inline-flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-bg-secondary text-text-secondary shadow-card transition-colors hover:text-text-primary"
       aria-label={mounted ? `Switch to ${nextTheme} mode` : "Toggle theme"}
       title={mounted ? `Switch to ${nextTheme} mode` : "Toggle theme"}
       disabled={!mounted}
