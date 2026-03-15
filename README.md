@@ -8,7 +8,7 @@
 ![Framer Motion](https://img.shields.io/badge/Framer_Motion-11-BB4BFF?style=flat-square&logo=framer&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-22C55E?style=flat-square)
 
-**Live demo:** [algoviz.vercel.app](#) &nbsp;·&nbsp; **Source:** [github.com/yourusername/algoviz](#)
+**Live demo:** [algoviz.vercel.app](#) &nbsp;·&nbsp; **Source:** [github.com/DDDesignDev/algoviz](#)
 
 ---
 
@@ -16,13 +16,11 @@
 
 | Landing page | Sorting visualizer |
 |---|---|
-| ![Landing page](public/screenshots/landing.png) | ![Sorting](public/screenshots/sorting.png) |
+| ![Landing page](public/landing.png) | ![Sorting](public/sorting.png) |
 
 | Pathfinding visualizer | Searching visualizer |
 |---|---|
-| ![Pathfinding](public/screenshots/pathfinding.png) | ![Searching](public/screenshots/searching.png) |
-
-> Replace placeholders with actual screenshots once running locally.
+| ![Pathfinding](public/pathfinding.png) | ![Searching](public/searching.png) |
 
 ---
 
