@@ -24,18 +24,23 @@ export default function VisualizerPage() {
 
   return (
     <div className="relative flex h-[100dvh] overflow-hidden" style={{ background: "var(--bg-primary)" }}>
-      <button
-        onClick={() => setMobileSidebarOpen((p) => !p)}
-        className="md:hidden absolute top-2 left-2 z-50 inline-flex items-center justify-center w-9 h-9 rounded-lg"
-        style={{ background: "var(--surface-2)", border: "1px solid var(--surface-5)" }}
-        aria-label={mobileSidebarOpen ? "Close menu" : "Open menu"}
+      <div
+        className="md:hidden absolute top-0 left-0 right-0 z-50 h-12 flex items-center px-2"
+        style={{ borderBottom: "1px solid var(--surface-4)", background: "var(--bg-secondary)" }}
       >
-        {mobileSidebarOpen ? <X className="w-4 h-4 text-text-secondary" /> : <Menu className="w-4 h-4 text-text-secondary" />}
-      </button>
+        <button
+          onClick={() => setMobileSidebarOpen((p) => !p)}
+          className="inline-flex items-center justify-center w-9 h-9 rounded-lg"
+          style={{ background: "var(--surface-2)", border: "1px solid var(--surface-5)" }}
+          aria-label={mobileSidebarOpen ? "Close menu" : "Open menu"}
+        >
+          {mobileSidebarOpen ? <X className="w-4 h-4 text-text-secondary" /> : <Menu className="w-4 h-4 text-text-secondary" />}
+        </button>
+      </div>
 
       {mobileSidebarOpen && (
         <button
-          className="md:hidden absolute inset-0 z-30"
+          className="md:hidden absolute left-0 right-0 bottom-0 top-12 z-30"
           style={{ background: "rgba(0,0,0,0.45)" }}
           aria-label="Close menu overlay"
           onClick={() => setMobileSidebarOpen(false)}
@@ -46,12 +51,12 @@ export default function VisualizerPage() {
         selectedAlgorithm={selectedAlgorithm}
         onSelect={handleSelect}
         className={cn(
-          "fixed inset-y-0 left-0 z-40 transition-transform duration-200 md:static md:translate-x-0",
+          "fixed left-0 top-12 bottom-0 z-40 transition-transform duration-200 md:static md:inset-auto md:translate-x-0",
           mobileSidebarOpen ? "translate-x-0" : "-translate-x-full"
         )}
       />
 
-      <main className="flex-1 overflow-hidden relative min-w-0">
+      <main className="flex-1 overflow-hidden relative min-w-0 pt-12 md:pt-0">
         <AnimatePresence mode="wait">
           <motion.div
             key={selectedAlgorithm}

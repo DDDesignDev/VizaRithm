@@ -149,7 +149,7 @@ export default function SortingVisualizer({ algorithmId }: { algorithmId: string
 
         {/* Toolbar */}
         <div
-          className="flex items-center gap-4 px-6 h-11 shrink-0"
+          className="flex items-center gap-3 px-4 sm:px-6 min-h-11 py-2 shrink-0 flex-wrap"
           style={{ borderBottom: "1px solid var(--surface-3)", background: "var(--bg-primary)" }}
         >
           <ControlBar
