@@ -16,11 +16,11 @@
 
 | Landing page | Sorting visualizer |
 |---|---|
-| ![Landing page](src/public/landing.png) | ![Sorting](public/sorting.png) |
+| ![Landing page](src/public/landing.png) | ![Sorting](src/public/sorting.png) |
 
 | Pathfinding visualizer | Searching visualizer |
 |---|---|
-| ![Pathfinding](public/pathfinding.png) | ![Searching](public/searching.png) |
+| ![Pathfinding](src/public/pathfinding.png) | ![Searching](src/public/searching.png) |
 
 ---
 
@@ -84,6 +84,7 @@ The constraints I imposed on myself pushed me toward patterns I use in productio
 | Insertion Sort | `O(n)` | `O(n²)` | `O(n²)` | `O(1)` | ✅ |
 | Merge Sort | `O(n log n)` | `O(n log n)` | `O(n log n)` | `O(n)` | ✅ |
 | Quick Sort | `O(n log n)` | `O(n log n)` | `O(n²)` | `O(log n)` | ❌ |
+| Heap Sort | `O(n log n)` | `O(n log n)` | `O(n log n)` | `O(1)` | ❌ |
 
 ### Pathfinding
 
@@ -230,7 +231,7 @@ vercel   # zero config — follows Next.js conventions automatically
 ## Future improvements
 
 **Algorithms**
-- Heap Sort, Radix Sort, Tim Sort, Shell Sort
+- Radix Sort, Tim Sort, Shell Sort
 - Bellman-Ford, bidirectional BFS
 - Jump Search, Interpolation Search
 
