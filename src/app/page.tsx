@@ -194,7 +194,7 @@ export default function LandingPage() {
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
               </Link>
               <a
-                href="https://github.com"
+                href="https://github.com/DDDesignDev/AlgoViz"
                 className="inline-flex items-center gap-2 text-sm font-medium px-5 py-2.5 rounded-xl transition-all text-text-secondary hover:text-text-primary"
                 style={{ background: "var(--surface-3)", border: "1px solid var(--border-default)" }}
               >

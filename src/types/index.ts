@@ -1,6 +1,7 @@
 // ─── Shared ───────────────────────────────────────────────────────────────────
 
 export type AlgorithmCategory = "sorting" | "pathfinding" | "searching" | "tree";
+export type CodeLanguage = "javascript" | "python" | "java";
 
 export type PlayState = "idle" | "playing" | "paused" | "finished";
 

@@ -1,8 +1,15 @@
 "use client";
 
+import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Clock, HardDrive, BookOpen, Tag } from "lucide-react";
-import { ALGORITHM_INFO } from "@/constants/algorithms";
+import { Clock, HardDrive, BookOpen, Tag, Code2 } from "lucide-react";
+import {
+  ALGORITHM_INFO,
+  ALGORITHM_CODE_SNIPPETS,
+  CODE_LANGUAGE_LABELS,
+  CODE_LANGUAGE_ORDER,
+} from "@/constants/algorithms";
+import { CodeLanguage } from "@/types";
 
 interface AlgorithmInfoPanelProps {
   algorithmId: string;
@@ -15,7 +22,27 @@ const VALUE = "text-xs font-mono";
 
 export default function AlgorithmInfoPanel({ algorithmId, currentStep }: AlgorithmInfoPanelProps) {
   const info = ALGORITHM_INFO[algorithmId];
+  const snippets = ALGORITHM_CODE_SNIPPETS[algorithmId] ?? {};
+
+  const availableLanguages = useMemo(
+    () => CODE_LANGUAGE_ORDER.filter((language) => snippets[language]),
+    [snippets],
+  );
+
+  const [selectedLanguage, setSelectedLanguage] = useState<CodeLanguage>("javascript");
+
+  useEffect(() => {
+    if (!availableLanguages.length) return;
+    if (!snippets[selectedLanguage]) {
+      setSelectedLanguage(availableLanguages[0]);
+    }
+  }, [algorithmId, availableLanguages, selectedLanguage, snippets]);
+
   if (!info) return null;
+
+  const selectedCode =
+    snippets[selectedLanguage] ??
+    (availableLanguages.length ? snippets[availableLanguages[0]] : undefined);
 
   return (
     <div className="space-y-3">
@@ -117,6 +144,43 @@ export default function AlgorithmInfoPanel({ algorithmId, currentStep }: Algorit
             </li>
           ))}
         </ul>
+      </Section>
+
+      {/* ── Code viewer ────────────────────────────────────────────── */}
+      <Section icon={Code2} label="Implementation">
+        {availableLanguages.length > 0 ? (
+          <div className="space-y-2.5">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] text-text-muted">Language</span>
+              <select
+                value={selectedLanguage}
+                onChange={(e) => setSelectedLanguage(e.target.value as CodeLanguage)}
+                className="h-7 px-2 rounded-md text-[11px] font-mono text-text-secondary outline-none"
+                style={{
+                  background: "var(--surface-2)",
+                  border: "1px solid var(--surface-5)",
+                }}
+              >
+                {availableLanguages.map((language) => (
+                  <option key={language} value={language}>
+                    {CODE_LANGUAGE_LABELS[language]}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div
+              className="rounded-lg p-2.5 overflow-auto"
+              style={{ background: "var(--bg-primary)", border: "1px solid var(--surface-4)" }}
+            >
+              <pre className="text-[11px] text-text-secondary font-mono whitespace-pre min-w-max">
+                {selectedCode}
+              </pre>
+            </div>
+          </div>
+        ) : (
+          <p className="text-xs text-text-muted">Code example coming soon.</p>
+        )}
       </Section>
     </div>
   );

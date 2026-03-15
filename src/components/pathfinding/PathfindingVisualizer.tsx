@@ -279,7 +279,7 @@ export default function PathfindingVisualizer({ algorithmId }: { algorithmId: st
 
       {/* Info panel */}
       <aside
-        className="w-64 overflow-y-auto shrink-0 p-4"
+        className="w-80 overflow-y-auto shrink-0 p-4"
         style={{ borderLeft: "1px solid var(--surface-4)", background: "var(--bg-secondary)" }}
       >
         <AlgorithmInfoPanel algorithmId={algorithmId} currentStep={currentDesc || undefined} />
