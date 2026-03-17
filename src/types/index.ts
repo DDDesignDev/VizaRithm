@@ -1,6 +1,6 @@
 // ─── Shared ───────────────────────────────────────────────────────────────────
 
-export type AlgorithmCategory = "sorting" | "pathfinding" | "searching" | "tree";
+export type AlgorithmCategory = "sorting" | "pathfinding" | "searching" | "tree" | "graph" | "dynamic";
 export type CodeLanguage = "javascript" | "python" | "java";
 
 export type PlayState = "idle" | "playing" | "paused" | "finished";
@@ -133,3 +133,79 @@ export interface TreeStep {
 }
 
 export type TreeTraversalOrder = "preorder" | "inorder" | "postorder";
+
+// ─── Graphs ───────────────────────────────────────────────────────────────────
+
+export type GraphNodeState =
+  | "default"
+  | "frontier"
+  | "visiting"
+  | "visited"
+  | "path"
+  | "start"
+  | "end";
+
+export type GraphEdgeState = "default" | "active" | "path";
+
+export interface GraphNode {
+  id: string;
+  label: string;
+  x: number;
+  y: number;
+  state: GraphNodeState;
+  distance: number;
+}
+
+export interface GraphEdge {
+  id: string;
+  from: string;
+  to: string;
+  weight: number;
+  state: GraphEdgeState;
+}
+
+export interface GraphData {
+  nodes: Record<string, GraphNode>;
+  edges: GraphEdge[];
+}
+
+export interface GraphStats {
+  visitedCount: number;
+  pathLength: number;
+  pathCost: number | null;
+}
+
+export interface GraphStep {
+  graph: GraphData;
+  stats: GraphStats;
+  description: string;
+}
+
+// ─── Dynamic Programming ─────────────────────────────────────────────────────
+
+export type DPCellState = "default" | "active" | "filled" | "path";
+
+export interface DPCell {
+  value: string;
+  state: DPCellState;
+}
+
+export interface DPTable {
+  title: string;
+  subtitle: string;
+  rowLabels: string[];
+  colLabels: string[];
+  cells: DPCell[][];
+}
+
+export interface DPStats {
+  filledCount: number;
+  totalCells: number;
+  answer: string;
+}
+
+export interface DPStep {
+  table: DPTable;
+  stats: DPStats;
+  description: string;
+}

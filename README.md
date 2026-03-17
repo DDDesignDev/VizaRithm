@@ -28,7 +28,7 @@
 
 VizaRithm is a portfolio-quality, browser-based tool for visualizing classic computer science algorithms. Each algorithm runs as a **step-by-step animation** — you can play it at any speed, pause mid-execution, advance one operation at a time, or reset and try again. A persistent info panel explains what the algorithm does, its time and space complexity, and the specific operation happening at the current step.
 
-The project now covers four categories — **sorting**, **pathfinding**, **searching**, and **binary tree (BST)** — across 17 algorithms total. It is designed to be extended: adding a new algorithm still follows a predictable workflow in a few focused files.
+The project now covers five categories — **sorting**, **pathfinding**, **searching**, **binary tree (BST)**, and **graphs** — across 20 algorithms total. It is designed to be extended: adding a new algorithm still follows a predictable workflow in a few focused files.
 
 ---
 
@@ -68,6 +68,11 @@ I wanted a portfolio project that demonstrated real engineering decisions, not j
 - DFS traversal order switcher: preorder, inorder, postorder
 - Path highlighting for comparisons and traversal progress
 - One-click random tree generation for fresh runs
+
+### Graph visualizer
+- Weighted node-link graph with one-click random graph generation
+- BFS, DFS, and Dijkstra step-by-step traversal from configurable start and end nodes
+- Live stats for visited nodes, path length, and shortest-path cost
 
 ### Info panel (all visualizers)
 - Live step annotation — updates every frame with a plain-language description
@@ -117,6 +122,14 @@ I wanted a portfolio project that demonstrated real engineering decisions, not j
 | BFS Traversal | `O(n)` | `O(n)` | `O(n)` | `O(n)` |
 | DFS Traversal | `O(n)` | `O(n)` | `O(n)` | `O(h)` |
 
+### Graphs
+
+| Algorithm | Best | Average | Worst | Space |
+|---|---|---|---|---|
+| Graph BFS | `O(V + E)` | `O(V + E)` | `O(V + E)` | `O(V)` |
+| Graph DFS | `O(V + E)` | `O(V + E)` | `O(V + E)` | `O(V)` |
+| Graph Dijkstra | `O(V log V)` | `O((V+E) log V)` | `O((V+E) log V)` | `O(V)` |
+
 ### Code snippets
 
 Every algorithm in the info panel includes implementation snippets in **JavaScript, Python, and Java**.
@@ -165,7 +178,7 @@ src/
 │   │   ├── Sidebar.tsx          # collapsible category nav, animated active bar
 │   │   └── AlgorithmInfoPanel.tsx
 │   ├── ui/
-│   │   └── ControlBar.tsx       # shared across all four visualizers
+│   │   └── ControlBar.tsx       # shared across all five visualizers
 │   ├── sorting/
 │   │   ├── SortingVisualizer.tsx
 │   │   └── SortBars.tsx
@@ -175,6 +188,9 @@ src/
 │   ├── searching/
 │   │   ├── SearchingVisualizer.tsx
 │   │   └── SearchBars.tsx
+│   ├── graph/
+│   │   ├── GraphVisualizer.tsx
+│   │   └── GraphCanvas.tsx
 │   └── tree/
 │       ├── TreeVisualizer.tsx
 │       └── TreeCanvas.tsx
@@ -182,12 +198,13 @@ src/
 ├── lib/
 │   ├── utils.ts                 # cn(), generators, speedToDelay()
 │   └── algorithms/
-│       ├── sorting/index.ts     # 6 pure step-generator functions
+│       ├── sorting/index.ts     # 7 pure step-generator functions
 │       ├── pathfinding/index.ts # 4 algorithms + grid helpers
+│       ├── graph/index.ts       # graph generation + BFS/DFS/Dijkstra steps
 │       ├── searching/index.ts   # 2 pure step-generator functions
 │       └── tree/index.ts        # BST + traversal step generators + layout
 │
-├── types/index.ts               # SortBar, Cell, SearchBar, TreeNode, PlayState, Step types
+├── types/index.ts               # SortBar, Cell, SearchBar, TreeNode, GraphNode, PlayState, Step types
 └── constants/algorithms.ts      # metadata + complexity + per-language code snippets
 ```
 

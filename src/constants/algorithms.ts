@@ -246,6 +246,38 @@ export const ALGORITHM_INFO: Record<string, AlgorithmInfo> = {
     useCases: ["Expression trees", "Producing sorted output (in-order)", "File system traversal"],
   },
 
+  // ── Graphs ────────────────────────────────────────────────────────────────
+  graphBFS: {
+    id: "graphBFS",
+    name: "Graph BFS",
+    category: "graph",
+    timeComplexity: { best: "O(V + E)", average: "O(V + E)", worst: "O(V + E)" },
+    spaceComplexity: "O(V)",
+    description:
+      "Graph BFS traverses a graph level by level from a chosen start node using a queue. In unweighted graphs, the first time it reaches a target node it has found a shortest path in number of edges.",
+    useCases: ["Unweighted shortest paths", "Social graphs", "Broadcast layering", "Connected component scans"],
+  },
+  graphDFS: {
+    id: "graphDFS",
+    name: "Graph DFS",
+    category: "graph",
+    timeComplexity: { best: "O(V + E)", average: "O(V + E)", worst: "O(V + E)" },
+    spaceComplexity: "O(V)",
+    description:
+      "Graph DFS explores one branch as deeply as possible before backtracking. It is useful for structural graph tasks like cycle detection, topological reasoning, and finding any reachable path.",
+    useCases: ["Cycle detection", "Topological sorting", "Reachability checks", "Maze-style exploration"],
+  },
+  graphDijkstra: {
+    id: "graphDijkstra",
+    name: "Graph Dijkstra",
+    category: "graph",
+    timeComplexity: { best: "O(V log V)", average: "O((V+E) log V)", worst: "O((V+E) log V)" },
+    spaceComplexity: "O(V)",
+    description:
+      "Dijkstra's algorithm computes shortest paths in weighted graphs with non-negative edge weights. It repeatedly settles the frontier node with the smallest known tentative distance, guaranteeing an optimal path.",
+    useCases: ["Network routing", "Weighted navigation", "Dependency cost analysis", "Shortest-path trees"],
+  },
+
 };
 
 export const CODE_LANGUAGE_LABELS: Record<CodeLanguage, string> = {
@@ -1034,17 +1066,193 @@ static void postorder(Node root, List<Integer> out) {
   out.add(root.value);
 }`,
   },
+  graphBFS: {
+    javascript: `function graphBfs(graph, start) {
+  const visited = new Set([start]);
+  const queue = [start];
+  const order = [];
+
+  while (queue.length) {
+    const node = queue.shift();
+    order.push(node);
+    for (const next of graph[node] ?? []) {
+      if (!visited.has(next)) {
+        visited.add(next);
+        queue.push(next);
+      }
+    }
+  }
+
+  return order;
+}`,
+    python: `from collections import deque
+
+def graph_bfs(graph, start):
+    visited = {start}
+    queue = deque([start])
+    order = []
+
+    while queue:
+        node = queue.popleft()
+        order.append(node)
+        for nxt in graph.get(node, []):
+            if nxt not in visited:
+                visited.add(nxt)
+                queue.append(nxt)
+
+    return order`,
+    java: `static List<String> graphBfs(Map<String, List<String>> graph, String start) {
+  Set<String> visited = new HashSet<>();
+  Queue<String> queue = new ArrayDeque<>();
+  List<String> order = new ArrayList<>();
+  visited.add(start);
+  queue.offer(start);
+
+  while (!queue.isEmpty()) {
+    String node = queue.poll();
+    order.add(node);
+    for (String next : graph.getOrDefault(node, List.of())) {
+      if (visited.add(next)) queue.offer(next);
+    }
+  }
+
+  return order;
+}`,
+  },
+  graphDFS: {
+    javascript: `function graphDfs(graph, start, visited = new Set(), order = []) {
+  visited.add(start);
+  order.push(start);
+
+  for (const next of graph[start] ?? []) {
+    if (!visited.has(next)) {
+      graphDfs(graph, next, visited, order);
+    }
+  }
+
+  return order;
+}`,
+    python: `def graph_dfs(graph, start, visited=None, order=None):
+    if visited is None:
+        visited = set()
+    if order is None:
+        order = []
+
+    visited.add(start)
+    order.append(start)
+
+    for nxt in graph.get(start, []):
+        if nxt not in visited:
+            graph_dfs(graph, nxt, visited, order)
+
+    return order`,
+    java: `static void graphDfs(
+  Map<String, List<String>> graph,
+  String start,
+  Set<String> visited,
+  List<String> order
+) {
+  visited.add(start);
+  order.add(start);
+
+  for (String next : graph.getOrDefault(start, List.of())) {
+    if (!visited.contains(next)) {
+      graphDfs(graph, next, visited, order);
+    }
+  }
+}`,
+  },
+  graphDijkstra: {
+    javascript: `function dijkstra(graph, start) {
+  const dist = { [start]: 0 };
+  const prev = {};
+  const pq = [[0, start]];
+  const settled = new Set();
+
+  while (pq.length) {
+    pq.sort((a, b) => a[0] - b[0]);
+    const [cost, node] = pq.shift();
+    if (settled.has(node)) continue;
+    settled.add(node);
+
+    for (const [next, weight] of graph[node] ?? []) {
+      const cand = cost + weight;
+      if (cand < (dist[next] ?? Infinity)) {
+        dist[next] = cand;
+        prev[next] = node;
+        pq.push([cand, next]);
+      }
+    }
+  }
+
+  return { dist, prev };
+}`,
+    python: `import heapq
+
+def dijkstra(graph, start):
+    dist = {start: 0}
+    prev = {}
+    pq = [(0, start)]
+    settled = set()
+
+    while pq:
+        cost, node = heapq.heappop(pq)
+        if node in settled:
+            continue
+        settled.add(node)
+
+        for nxt, weight in graph.get(node, []):
+            cand = cost + weight
+            if cand < dist.get(nxt, float("inf")):
+                dist[nxt] = cand
+                prev[nxt] = node
+                heapq.heappush(pq, (cand, nxt))
+
+    return dist, prev`,
+    java: `static Map<String, Integer> dijkstra(
+  Map<String, List<String[]>> graph,
+  String start
+) {
+  Map<String, Integer> dist = new HashMap<>();
+  PriorityQueue<String[]> pq = new PriorityQueue<>(Comparator.comparingInt(a -> Integer.parseInt(a[0])));
+  Set<String> settled = new HashSet<>();
+  dist.put(start, 0);
+  pq.offer(new String[]{"0", start});
+
+  while (!pq.isEmpty()) {
+    String[] cur = pq.poll();
+    int cost = Integer.parseInt(cur[0]);
+    String node = cur[1];
+    if (!settled.add(node)) continue;
+
+    for (String[] edge : graph.getOrDefault(node, List.of())) {
+      String next = edge[0];
+      int weight = Integer.parseInt(edge[1]);
+      int cand = cost + weight;
+      if (cand < dist.getOrDefault(next, Integer.MAX_VALUE)) {
+        dist.put(next, cand);
+        pq.offer(new String[]{String.valueOf(cand), next});
+      }
+    }
+  }
+
+  return dist;
+}`,
+  },
 };
 
 export const SORTING_ALGORITHMS = ["bubbleSort", "selectionSort", "insertionSort", "mergeSort", "quickSort", "heapSort", "bogoSort"];
 export const PATHFINDING_ALGORITHMS = ["bfs", "dfs", "dijkstra", "aStar"];
 export const SEARCHING_ALGORITHMS = ["linearSearch", "binarySearch"];
 export const TREE_ALGORITHMS = ["bstInsert", "bstSearch", "bfsBST", "dfsBST"];
+export const GRAPH_ALGORITHMS = ["graphBFS", "graphDFS", "graphDijkstra"];
 
 export const CATEGORY_LABELS: Record<string, string> = {
   sorting: "Sorting",
   pathfinding: "Pathfinding",
   searching: "Searching",
+  tree: "Trees",
+  graph: "Graphs",
 };
 
 export const DEFAULT_SPEED = 50; // ms delay

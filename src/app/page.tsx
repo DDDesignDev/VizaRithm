@@ -5,7 +5,8 @@ import Link from "next/link";
 import {
   ArrowRight, BarChart3, Network, Search,
   Code2, Layers, GitBranch, Cpu, Zap,
-  NetworkIcon,
+  NetworkIcon, Share2,
+  Map,
 } from "lucide-react";
 
 const FEATURES = [
@@ -19,7 +20,7 @@ const FEATURES = [
     algorithms: ["Bubble Sort", "Selection Sort", "Insertion Sort", "Merge Sort", "Quick Sort", "Heap Sort", "Bogo Sort"],
   },
   {
-    icon: Network,
+    icon: Map,
     label: "Pathfinding",
     title: "Pathfinding Algorithms",
     desc: "Draw walls, move nodes, and watch four algorithms explore the grid.",
@@ -44,6 +45,15 @@ const FEATURES = [
     accent: "orange",
     accentHex: "#fb923c",
     algorithms: ["BST Insert", "BST Search", "BFS Traversal", "DFS Traversal"],
+  },
+  {
+    icon: Share2,
+    label: "Graphs",
+    title: "Graph Algorithms",
+    desc: "Trace graph traversal and shortest paths across weighted node-link networks.",
+    accent: "amber",
+    accentHex: "#f97316",
+    algorithms: ["Graph BFS", "Graph DFS", "Graph Dijkstra"],
   },
 ];
 
@@ -93,7 +103,7 @@ export default function LandingPage() {
             </div>
 
             <nav className="hidden md:flex items-center gap-6">
-              {["Sorting", "Pathfinding", "Searching", "Binary Tree"].map((item) => (
+              {["Sorting", "Pathfinding", "Searching", "Binary Tree", "Graphs"].map((item) => (
                 <Link
                   key={item}
                   href="/visualizer"
@@ -147,7 +157,7 @@ export default function LandingPage() {
                 <span
                   className="w-1.5 h-1.5 rounded-full bg-accent-cyan animate-pulse-slow"
                 />
-                17 algorithms · Step-through · Open source
+                20 algorithms · Step-through · Open source
               </span>
             </motion.div>
 
@@ -175,9 +185,9 @@ export default function LandingPage() {
               className="text-text-secondary text-lg leading-relaxed mb-10 max-w-2xl"
               style={{ fontWeight: 300 }}
             >
-              An interactive visualization tool for sorting, pathfinding, and searching
-              algorithms. Step through each operation, control speed, and understand
-              complexity — all in real time.
+              An interactive visualization tool for sorting, pathfinding, searching,
+              tree, and graph algorithms. Step through each operation, control speed,
+              and understand complexity in real time.
             </motion.p>
 
             <motion.div variants={fadeUp} className="flex items-center gap-3 flex-wrap">
@@ -212,19 +222,19 @@ export default function LandingPage() {
           transition={{ delay: 0.45, duration: 0.5 }}
         >
           <div
-            className="grid grid-cols-4 rounded-2xl overflow-hidden"
+            className="grid grid-cols-2 md:grid-cols-5 rounded-2xl overflow-hidden"
             style={{ border: "1px solid var(--surface-5)", background: "var(--surface-glass)" }}
           >
             {[
-              { value: "17",   label: "Algorithms",   accent: "#22D3EE" },
-              { value: "4",    label: "Categories",   accent: "#A78BFA" },
+              { value: "20",   label: "Algorithms",   accent: "#22D3EE" },
+              { value: "5",    label: "Categories",   accent: "#A78BFA" },
               { value: "∞",    label: "Step modes",   accent: "#34D399" },
+              { value: "3",    label: "Graph algos",  accent: "#F97316" },
               { value: "MIT",  label: "Open source",  accent: "#FBBF24" },
-            ].map((s, i, arr) => (
+            ].map((s) => (
               <div
                 key={s.label}
                 className="py-7 text-center"
-                style={{ borderRight: i < arr.length - 1 ? "1px solid var(--surface-5)" : undefined }}
               >
                 <div
                   className="font-display text-3xl font-bold mb-1"
@@ -248,7 +258,7 @@ export default function LandingPage() {
             transition={{ duration: 0.5 }}
           >
             <h2 className="font-display text-3xl font-bold text-text-primary mb-3" style={{ letterSpacing: "-0.02em" }}>
-              Four categories, one tool
+              Five categories, one tool
             </h2>
             <p className="text-text-secondary text-base max-w-lg">
               Every algorithm ships with complexity tables, plain-language descriptions,
@@ -256,7 +266,7 @@ export default function LandingPage() {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid md:grid-cols-2 xl:grid-cols-5 gap-4">
             {FEATURES.map((feat, i) => (
               <motion.div
                 key={feat.title}
